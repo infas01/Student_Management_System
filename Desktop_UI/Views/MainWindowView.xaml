@@ -1,0 +1,258 @@
+﻿<Window x:Class="Desktop_UI.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop_UI.Views" 
+        xmlns:local1="clr-namespace:Desktop_UI.ViewModels"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="MainWindowView" 
+        Height="720" Width="1080"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Move_Window"
+        AllowsTransparency="True"
+        WindowStyle="None">
+
+    <Window.DataContext>
+        <local1:MainWindowVM/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <Border CornerRadius="30"
+            Background="#00695C">
+        
+        <Grid>
+            <Button Style="{StaticResource CloseButton}"
+                            Click="CloseButton_Click"
+                            Margin="1000 -670 0 0"
+                            ToolTip="Close">
+
+                <Icon:PackIconMaterial  Kind="CloseCircle"
+                                                Width="20" 
+                                                Height="20"/>
+            </Button>
+            
+            <Grid Margin="30 20 20 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                
+                <Grid>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="600"/>
+                        <ColumnDefinition Width="300"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    
+
+                    <Image Source="C:\Users\Infas_NM\Desktop\Desktop_UI_Project\Desktop_UI\Desktop_UI\Images\LOGO_OF_RUHUNA.png"
+                           Grid.Column="0"
+                           Width="100"
+                           Height="100"
+                           Margin="0 5 0 0"/>
+
+                    <StackPanel Grid.Column="1">
+
+                        <TextBlock Text="Faculty of Engineering"
+                                   FontSize="40"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"/>
+                        <TextBlock Text="University of Ruhuna"
+                                   FontSize="32" 
+                                   FontWeight="DemiBold"
+                                   Foreground="White" 
+                                   HorizontalAlignment="Left"/>
+
+                    </StackPanel>
+
+
+                    <TextBlock Grid.Column="2"
+                               Margin="20 0" 
+                               VerticalAlignment="Center" 
+                               Foreground="#B0B9C6" 
+                               IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Search here ..."
+                               Visibility="{Binding ElementName=textBoxSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+
+                    <TextBox   Grid.Column="2"
+                               Name="textBoxSearch" 
+                               Style="{StaticResource searchTextbox}"/>
+
+                    <Icon:PackIconMaterial  Grid.Column="2"
+                                            Kind="Magnify" 
+                                            Width="15" 
+                                            Height="15" 
+                                            VerticalAlignment="Center" 
+                                            Margin="0 0 15 0" 
+                                            Foreground="#B0B9C6" 
+                                            HorizontalAlignment="Right"/>
+
+                </Grid>
+
+
+                <Separator Grid.Row="1"
+                           Height="4"
+                           Background="Yellow"
+                           Margin="10 5 5 10"/>
+
+                
+                <Grid Grid.Row="2">
+
+                <TextBlock Text="Student Details"
+                           FontSize="25" 
+                           FontWeight="SemiBold" 
+                           Foreground="White" 
+                           Margin="20 0 0 0"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Center"/>
+
+                </Grid>
+
+                <DataGrid x:Name="StudentsDataGridView"
+                          Grid.Row="3"
+                          ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}"
+                          RowStyle="{DynamicResource DataGridRowStyle}"  
+                          CellStyle="{DynamicResource DataGridCellStyle}" 
+                          Style="{DynamicResource DataGridStyle}"
+                          SelectedItem="{Binding SelectedUser,UpdateSourceTrigger=PropertyChanged}" >
+                                      
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="No"
+                                            CanUserResize="False" 
+                                            Width="auto" 
+                                            Binding="{Binding Number,UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True"/>
+                        
+                        <DataGridTemplateColumn Header="Profile"
+                                                Width="70">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImagePath}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!--
+                        <DataGridTextColumn Header="Full Name" 
+                                            Binding="{Binding FullName}"
+                                            Width="*"
+                                            IsReadOnly="True"/>
+                        -->
+                        
+                        <DataGridTextColumn Header="First Name"
+                                            Binding="{Binding FirstName,UpdateSourceTrigger=PropertyChanged}" 
+                                            IsReadOnly="True" Width="*"/>
+
+                        <DataGridTextColumn Header="Last Name" 
+                                            Binding="{Binding LastName,UpdateSourceTrigger=PropertyChanged}" 
+                                            IsReadOnly="True" Width="*"/>
+                        
+                        <DataGridTextColumn Header="Date of Birth" 
+                                            Binding="{Binding DateOfBirth,UpdateSourceTrigger=PropertyChanged}"
+                                            Width="*"
+                                            IsReadOnly="True" />
+                        
+                        <DataGridTextColumn Header="GPA" 
+                                            Binding="{Binding Gpa,UpdateSourceTrigger=PropertyChanged}"
+                                            Width="*"
+                                            IsReadOnly="True" />
+                        
+                        <DataGridTextColumn Header="Department" 
+                                            Binding="{Binding Department,UpdateSourceTrigger=PropertyChanged}"
+                                            Width="*"
+                                            IsReadOnly="True"/>
+
+                        <!--
+                        <DataGridTemplateColumn Header="Edit | Delete"
+                                                Width="auto"
+                                                IsReadOnly="True" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource EditButton1}"
+                                                Click="EditButton_Click">
+                                            <Icon:PackIconMaterial Kind="PencilOutline" 
+                                                                   Style="{StaticResource ButtonIcon}"/>
+                                        </Button>
+                                        <Button Margin="10 0 0 0" 
+                                                Style="{StaticResource DeleteButton1}"
+                                                Click="DeleteButton_Click">
+                                            <Icon:PackIconMaterial Kind="DeleteOutline" 
+                                                                   Style="{StaticResource ButtonIcon}"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        -->
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Grid Grid.Row="4">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0 10 0 0">
+                        <Button Style="{StaticResource AddButton}"
+                                Margin="0 5 25 5"
+                                Command="{Binding AddStudentCommand}"
+                                ToolTip="Create">
+
+                            <Icon:PackIconMaterial Kind="Plus" 
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="20" 
+                                                   Height="20"/>
+                        </Button>
+                        <Button Style="{StaticResource AddButton}"
+                                Margin="0 5 25 5"
+                                Command="{Binding DeleteStudentCommand}"
+                                ToolTip="Delete">
+
+                            <Icon:PackIconMaterial Kind="DeleteOutline" 
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="20" 
+                                                   Height="20"/>
+                        </Button>
+                        <Button Style="{StaticResource AddButton}"
+                                Margin="0 5 25 5"
+                                Command="{Binding EditStudentCommand}"
+                                ToolTip="Edit">
+
+                            <Icon:PackIconMaterial Kind="PencilOutline" 
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="20" 
+                                                   Height="20"/>
+                        </Button>
+                        <!--<Button Style="{StaticResource AddButton}"
+                                Click="Button_Click"
+                                Margin="0 5 25 5"
+                                ToolTip="Refresh">
+
+                            <Icon:PackIconMaterial Kind="Refresh" 
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Width="20" 
+                                                   Height="20"/>
+                        </Button>-->
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
