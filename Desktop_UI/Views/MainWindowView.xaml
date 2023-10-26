@@ -56,9 +56,9 @@
 
                     </Grid.ColumnDefinitions>
 
-                    
 
-                    <Image Source="C:\Users\Infas_NM\Desktop\Desktop_UI_Project\Desktop_UI\Desktop_UI\Images\LOGO_OF_RUHUNA.png"
+
+                    <Image Source="D:\WPF\Desktop_UI_Project\Desktop_UI\Desktop_UI\Images\LOGO_OF_RUHUNA.png"
                            Grid.Column="0"
                            Width="100"
                            Height="100"

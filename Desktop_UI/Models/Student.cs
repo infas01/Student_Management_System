@@ -28,7 +28,7 @@ namespace Desktop_UI.Models
         */
         public string ImagePath
         {
-            get { return $"C:/Users/Infas_NM/Desktop/Desktop_UI_Project/Desktop_UI/Desktop_UI/Images/{Image}"; }
+            get { return $"D:/WPF/Desktop_UI_Project/Desktop_UI/Desktop_UI/Images/{Image}"; }
         }
 
         public Student(int number, string image, string firstName, string lastName, string dateOfBirth, string gpa, string department)
